@@ -1,0 +1,362 @@
+const Region = {
+    LPL: "LPL",
+    LEC: "LEC",
+    LCK: "LCK",
+    LCS: "LCS",
+    PCS: "PCS"
+};
+
+const Team = {
+    TES: { region : Region.LPL, name : "TES", pool : 0 , numInPool : 0},
+    JDG: { region : Region.LPL, name : "JDG", pool : 1 , numInPool : 0},
+    SN:  { region : Region.LPL, name : "SN" , pool : 1 , numInPool : 1},
+    G2:  { region : Region.LEC, name : "G2" , pool : 0 , numInPool : 1},
+    FNC: { region : Region.LEC, name : "FNC", pool : 1 , numInPool : 2},
+    RGE: { region : Region.LEC, name : "RGE", pool : 2 , numInPool : 0},
+    DWG: { region : Region.LCK, name : "DWG", pool : 0 , numInPool : 2},
+    DRX: { region : Region.LCK, name : "DRX", pool : 1 , numInPool : 3},
+    GEN: { region : Region.LCK, name : "GEN", pool : 2 , numInPool : 1},
+    TSM: { region : Region.LCS, name : "TSM", pool : 0 , numInPool : 3},
+    FLY: { region : Region.LCS, name : "FLY", pool : 2 , numInPool : 2},
+    MCX: { region : Region.PCS, name : "MCX", pool : 2 , numInPool : 3}
+};
+
+const Group = {
+    A : 0,
+    B : 1,
+    C : 2,
+    D : 3,
+};
+
+const EMPTY = {};
+
+function GroupBoard(groupA, groupB, groupC, groupD){
+    this.board = [groupA, groupB, groupC, groupD];
+}
+
+function emptyGroupBoard(){
+    return new GroupBoard([EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY]);
+};
+
+GroupBoard.prototype.clone = function() {
+    return new GroupBoard(this.board[0].filter(s=>true), this.board[1].filter(s=>true), [...this.board[2]], [...this.board[3]]);
+}
+
+GroupBoard.prototype.replace = function(team, group, pool) {
+    this.board[group][pool] = team;
+};
+
+function isViableGroup(groupMembers) {
+    if (groupMembers.length !== 3) {
+        return false;
+    }
+    for (let i = 0; i < groupMembers.length; i++) {
+        for (let j = i+1; j<groupMembers.length; j++) {
+            if (groupMembers[i].region === groupMembers[j].region 
+                    || groupMembers[i].region === null 
+                    || groupMembers[j].region === null) {
+                return false;
+            }
+        }
+    }
+    if (groupMembers[0] === Team.TSM && groupMembers[1] === Team.DRX && groupMembers[2] === Team.MCX) {
+        return false;
+    }
+    return true;
+}
+
+GroupBoard.prototype.isViableFinal = function() {
+    for (let i=0; i< this.board.length; i++) {
+        if (!isViableGroup(this.board[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function AdvancerNode(board, children, nextTeams, previousPicks) {
+    this.board=board;
+    this.children=children;
+    this.nextTeams=nextTeams;
+    this.previousPicks=previousPicks;
+}
+
+AdvancerNode.prototype.advance = function(team) {
+    return children[nextTeams.indexOf(team)];
+}
+
+// createTree returns null if there is no way of filling in the remaining teams on the boardAttempt
+// If there is such a method, createTree returns the underlying AdvancerNode with the desired decision tree.
+function createTree(boardAttempt, remainingTeams, freeIndices, picks) {
+    let poolIndex = Math.floor((picks.length+1)/4);
+    if (poolIndex === 3) {
+        if (boardAttempt.isViableFinal()) {
+            return new AdvancerNode(boardAttempt, [], [], picks);
+        } else {
+            return null;
+        }
+    }
+    let children = remainingTeams[poolIndex];
+    let clonedBoard = boardAttempt.clone();
+    let addNext = function(team) {
+        for (let i=0; i < freeIndices.length; i++) {
+        }
+        return null;
+    }
+}
+
+const permutations4 = [
+                        [0,1,2,3], [0,1,3,2], [0,2,1,3], [0,2,3,1], [0,3,1,2], [0,3,2,1],
+                        [1,0,2,3], [1,0,3,2], [1,2,0,3], [1,2,3,0], [1,3,0,2], [1,3,2,0],
+                        [2,0,1,3], [2,0,3,1], [2,1,0,3], [2,1,3,0], [2,3,0,1], [2,3,1,0],
+                        [3,0,1,2], [3,0,2,1], [3,1,0,2], [3,1,2,0], [3,2,0,1], [3,2,1,0]
+                    ];
+
+function numberPoolToTeam(num, poolNum){
+    return {
+               0: {
+                   0:Team.TES,
+                   1:Team.G2,
+                   2:Team.DWG,
+                   3:Team.TSM
+               },
+               1: {
+                   0:Team.JDG,
+                   1:Team.SN,
+                   2:Team.FNC,
+                   3:Team.DRX
+               },
+               2: {
+                   0:Team.RGE,
+                   1:Team.GEN,
+                   2:Team.FLY,
+                   3:Team.MCX
+               }
+           }[poolNum][num];
+};
+
+function computeViableFinalGroupBoards() {
+    let groupBoardList = [];
+    for (let i=0; i<permutations4.length; i++) {
+        for (let j=0; j<permutations4.length; j++) {
+            for (let k=0; k<permutations4.length; k++) {
+                let currentBoard = emptyGroupBoard();
+                for (let groupIndex = 0; groupIndex<4; groupIndex++) {
+                    currentBoard.replace(numberPoolToTeam(permutations4[i][groupIndex], 0), groupIndex, 0);
+                    currentBoard.replace(numberPoolToTeam(permutations4[j][groupIndex], 1), groupIndex, 1);
+                    currentBoard.replace(numberPoolToTeam(permutations4[k][groupIndex], 2), groupIndex, 2);
+                }
+                if (currentBoard.isViableFinal()) {
+                    groupBoardList.push(currentBoard);
+                }
+            }
+        }
+    }
+    return groupBoardList;
+};
+
+const VIABLE_FINAL_GROUP_BOARDS = computeViableFinalGroupBoards();
+
+function canCompleteTo(currentBoard, finalBoard) {
+    let curr = currentBoard.board;
+    let key = finalBoard.board;
+    for (let i=0; i<key.length; i++) {
+        for (let j=0; j<key[0].length; j++) {
+            if (curr[i][j] === EMPTY || curr[i][j] === key[i][j]) {
+                continue;
+            }
+            return false;
+        }
+    }
+    return true;
+}
+
+GroupBoard.prototype.isViable = function() {
+    for (let i = 0; i<VIABLE_FINAL_GROUP_BOARDS.length; i++) {
+        if (canCompleteTo(this, VIABLE_FINAL_GROUP_BOARDS[i])) {
+            return true;
+        }
+    }
+    return false;
+};
+
+
+function Advancer() {
+    this.nextPoolIndex = 0;
+    this.notTakenGroups = [Group.A, Group.B, Group.C, Group.D];
+    this.remainingTeams = [[Team.TES, Team.G2, Team.DWG, Team.TSM], [Team.JDG, Team.SN, Team.FNC, Team.DRX], [Team.RGE, Team.GEN, Team.FLY, Team.MCX]];
+    this.currentBoard = emptyGroupBoard();
+};
+
+Advancer.prototype.pickableTeams = function() {
+    return this.nextPoolIndex === 3 ? [] : this.remainingTeams[this.nextPoolIndex];
+};
+
+Advancer.prototype.advance = function(team) {
+    let teamIndex = this.pickableTeams().indexOf(team);
+    for (let i= 0; i<this.notTakenGroups.length; i++) {
+        currentGroup = this.notTakenGroups[i];
+        this.currentBoard.replace(team, currentGroup, this.nextPoolIndex);
+        if (this.currentBoard.isViable()) {
+            this.remainingTeams[this.nextPoolIndex].splice(teamIndex,1);
+            this.notTakenGroups.splice(i,1);
+            break;
+        } else {
+            this.currentBoard.replace(EMPTY, currentGroup, this.nextPoolIndex);
+        }
+    }
+    if (this.notTakenGroups.length === 0) {
+        this.notTakenGroups = [Group.A, Group.B, Group.C, Group.D];
+        this.nextPoolIndex++;
+    }
+};
+
+Advancer.prototype.advanceAll = function(picks) {
+    for (let i=0; i< picks.length; i++) {
+        this.advance(picks[i]);
+    }
+};
+
+function PickOrder(order0, order1, order2) {
+    this.picks = [];
+    for (let i=0; i<order0.length; i++) {
+        this.picks.push(numberPoolToTeam(order0[i],0));
+    }
+    for (let i=0; i<order0.length; i++) {
+        this.picks.push(numberPoolToTeam(order1[i],1));
+    }
+    for (let i=0; i<order0.length; i++) {
+        this.picks.push(numberPoolToTeam(order2[i],2));
+    }
+};
+
+PickOrder.prototype.resultingGroupBoard = function() {
+    let myAdvancer = new Advancer();
+    myAdvancer.advanceAll(this.picks);
+    return myAdvancer.currentBoard;
+};
+
+PickOrder.prototype.hasHead = function(headPicks){
+    for (let i=0; i<headPicks.length; i++) {
+        if (headPicks[i] !== this.picks[i]) {
+            return false;
+        }
+    }
+    return true;
+};
+
+function listAllPickOrders() {
+    let list = [];
+    for (let i=0; i<permutations4.length; i++) {
+        for (let j=0; j<permutations4.length; j++) {
+            for (let k=0; k<permutations4.length; k++) {
+                list.push(new PickOrder(permutations4[i], permutations4[j], permutations4[k]));
+            }
+        }
+    }
+    return list;
+}
+
+const ALL_PICK_ORDERS = listAllPickOrders();
+
+function Advanced(picks) {
+    this.previousPicks=picks;
+    this.advancer=new Advancer();
+    this.advancer.advanceAll(picks);
+    this.remainingPickOrders = [];
+    for (let i= 0; i<ALL_PICK_ORDERS.length; i++) {
+        if (ALL_PICK_ORDERS[i].hasHead(picks)) {
+            this.remainingPickOrders.push(ALL_PICK_ORDERS[i]);
+        }   
+    }
+    this.remainingSpray = [[[0,0,0,0], [0,0,0,0], [0,0,0,0]], 
+                           [[0,0,0,0], [0,0,0,0], [0,0,0,0]], 
+                           [[0,0,0,0], [0,0,0,0], [0,0,0,0]], 
+                           [[0,0,0,0], [0,0,0,0], [0,0,0,0]]];
+     for (let i=0; i<this.remainingPickOrders.length; i++) {
+         let resultingBoard = this.remainingPickOrders[i].resultingGroupBoard();
+         for (let j = 0; j < 4; j++) {
+             for (let k=0; k<3; k++) {
+                 this.remainingSpray[j][k][resultingBoard.board[j][k].numInPool]++;
+             }
+         }
+     }
+}
+
+function Condition(pool0Allowed, pool1Allowed, pool2Allowed) {
+    this.pool0Allowed = pool0Allowed;
+    this.pool1Allowed = pool1Allowed;
+    this.pool2Allowed = pool2Allowed;
+}
+
+function groupSatisfiesCondition(group, condition) {
+    return condition.pool0Allowed.indexOf(group[0]) !== -1 
+        && condition.pool1Allowed.indexOf(group[1]) !== -1
+        && condition.pool2Allowed.indexOf(group[2]) !== -1;
+}
+
+Advanced.prototype.remainingPickOrdersSatisfyCondition = function(condition) {
+    let goodPickOrders = [];
+    for (let i = 0; i<this.remainingPickOrders.length; i++) {
+        let resultingBoard = remainingPickOrders[i].resultingGroupBoard();
+        for (let j=0; j<4 ; j++) {
+            if (groupSatisfiesCondition(resultingBoard.board[j],condition)) {
+                goodPickOrders.push(remainingPickOrders[i]);
+                continue;
+            }
+        }
+    }
+    return goodPickOrders;
+}
+
+function SelectorState(poolOpened) {
+    this.poolOpened = poolOpened;
+}
+
+const pool0SelectorPics = document.querySelectorAll(".pool-1-selector-pic");
+const pool1SelectorPics = document.querySelectorAll(".pool-2-selector-pic");
+const pool2SelectorPics = document.querySelectorAll(".pool-3-selector-pic");
+
+const pools = document.querySelectorAll(".pool");
+
+function updateSelectorExpansion(selectState) {
+    for (let i=0; i<selectState.poolOpened.length; i++) {
+        if (selectState.poolOpened[i] === true) {
+            pools[i].style.display = "flex";
+        } else {
+            pools[i].style.display = "none";
+        }
+    }
+}
+
+function selectorUpdate(selectState, advanced) {
+    updateSelectorExpansion(selectState);
+}
+
+function PageState(selectState) {
+    this.savedState = new Advanced([]);
+    this.currentState = new Advanced([]);
+    this.selectState = selectState;
+}
+
+let pageState = new PageState(new SelectorState([true,false,false]));
+
+/*const poolHeaders = document.querySelectorAll(".pool-header");
+
+for (let i = 0; i< poolHeaders.length; i++) {
+    poolHeaders[i].addEventListener("click", function() {
+        pageState.selectState.poolOpened[i] = ! pageState.selectState.poolOpened[i];
+        updateSelectorExpansion(pageState.selectState);
+    });
+}
+
+function updatePoolHeaderColors(orangeIndex) {
+    for (let i=0; i< poolHeaders.length; i++) {
+        if (i===orangeIndex) {
+            poolHeaders[i].style.backgroundColor = "#E67E22";
+        } else {
+            poolHeaders[i].style.backgroundColor = "#2874A6";
+        }
+    }
+}
+*/

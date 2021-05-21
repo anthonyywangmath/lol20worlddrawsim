@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Simulate the drawing of the groups for the League of Legends 2020 Worlds tournament">
+        <link href="styles/navbar.css" rel="stylesheet">
+        <link href="styles/style.css" rel="stylesheet">
+        <script src="scripts/main.js" defer></script>
+        <title>2020 Worlds Group Draw Simulator</title>
+    </head>
+    <body>
+        <header>
+            <h1>LoL 2020 Worlds Group Draw Simulator</h1>
+        </header>
+        <hr>
+        <nav class="navbar">
+            <ul class="navbar-list">
+                <li><a href="index.html">Simulator</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <hr>
+        <main>
+        <table id="display-table">
+            <tr>
+                <th>Group A</th>
+                <th>Group B</th>
+                <th>Group C</th>
+                <th>Group D</th>
+            </tr>
+            <tr class="display-table-pool" id="display-table-pool-1">
+                <td id="display-table-1a" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>TES:<a class="prob-space"></a>%</td>
+                            <td>G2:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>DWG:<a class="prob-space"></a>%</td>
+                            <td>TSM:<a class="prob-space"></a>%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td id="display-table-1b" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>TES:<a class="prob-space"></a>%</td>
+                            <td>G2:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>DWG:<a class="prob-space"></a>%</td>
+                            <td>TSM:<a class="prob-space"></a>%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td id="display-table-1c" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>TES:<a class="prob-space"></a>%</td>
+                            <td>G2:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>DWG:<a class="prob-space"></a>%</td>
+                            <td>TSM:<a class="prob-space"></a>%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td id="display-table-1d" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>TES:<a class="prob-space"></a>%</td>
+                            <td>G2:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>DWG:<a class="prob-space"></a>%</td>
+                            <td>TSM:<a class="prob-space"></a>%</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="display-table-pool" id="display-table-pool-2">
+                <td id="display-table-2a" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>JDG:<a class="prob-space"></a>%</td>
+                            <td>SN:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>FNC:<a class="prob-space"></a>%</td>
+                            <td>DRX:<a class="prob-space"></a>%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td id="display-table-2b" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>JDG:<a class="prob-space"></a>%</td>
+                            <td>SN:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>FNC:<a class="prob-space"></a>%</td>
+                            <td>DRX:<a class="prob-space"></a>%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td id="display-table-2c" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>JDG:<a class="prob-space"></a>%</td>
+                            <td>SN:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>FNC:<a class="prob-space"></a>%</td>
+                            <td>DRX:<a class="prob-space"></a>%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td id="display-table-2d" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>JDG:<a class="prob-space"></a>%</td>
+                            <td>SN:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>FNC:<a class="prob-space"></a>%</td>
+                            <td>DRX:<a class="prob-space"></a>%</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="display-table-pool" id="display-table-pool-3">
+                <td id="display-table-3a" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>RGE:<a class="prob-space"></a>%</td>
+                            <td>GEN:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>FLY:<a class="prob-space"></a>%</td>
+                            <td>MCX:<a class="prob-space"></a>%</td>
+                        </tr>
+                    </table>
+                </td>
+                <td id="display-table-3b" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>RGE:<a class="prob-space"></a>%</td>
+                            <td>GEN:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>FLY:<a class="prob-space"></a>%</td>
+                            <td>MCX:<a class="prob-space"></a>%</td>
+                        </tr>
+
+                    </table>
+                </td>
+                <td id="display-table-3c" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>RGE:<a class="prob-space"></a>%</td>
+                            <td>GEN:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>FLY:<a class="prob-space"></a>%</td>
+                            <td>MCX:<a class="prob-space"></a>%</td>
+                        </tr>
+
+                    </table>
+                </td>
+                <td id="display-table-3d" class="display-table-cell">
+                    <img src="images/blank.svg">
+                    <table class="probability-undertable">
+                        <tr>
+                            <td>RGE:<a class="prob-space"></a>%</td>
+                            <td>GEN:<a class="prob-space"></a>%</td>
+                        </tr>
+                        <tr>
+                            <td>FLY:<a class="prob-space"></a>%</td>
+                            <td>MCX:<a class="prob-space"></a>%</td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div class="simulation-control">
+            <button id="draw-next-button">Draw Next</button>
+            <button id="save-state-button">Save State</button>
+            <button id="reset-save-state-button">Reset Save State</button>
+            <button id="return-to-save-button">Return to Save</button>
+            <button id="simulate-from-start-button">Simulate from start</button>
+            <button id="simulate-from-here-button">Simulate from here</button>
+            <button id="simulate-from-save-button">Simulate from save</button>
+        </div>
+        <button class="pool-header" id="pool-1-header">Pool 1</button>
+        <ul class="pool" id="pool-1">
+            <li><div class="pool-1-selector" id="TES-selector">
+                <img id="TES-selector-pic" class="pool-1-selector-pic" src="images/TES.png">
+                <img id="TES-top-number" class="pool-1-top-number"></div></li>
+            <li><div class="pool-1-selector" id="G2-selector">
+                <img id="G2-selector-pic" class="pool-1-selector-pic" src="images/G2.png">
+                <img id="G2-top-number" class="pool-1-top-number" src="images/blank.svg"></div></li>
+            <li><div class="pool-1-selector" id="DWG-selector">
+                <img id="DWG-selector-pic" class="pool-1-selector-pic" src="images/DWG.png">
+                <img id="DWG-top-number" class="pool-1-top-number"></div></li>
+            <li><div class="pool-1-selector" id="TSM-selector">
+                <img id="TSM-selector-pic" class="pool-1-selector-pic" src="images/TSM.png">
+                <img id="TSM-top-number" class="pool-1-top-number"></div></li>
+        </ul>
+        <button class="pool-header">Pool 2</button>
+        <ul class="pool" id="pool-2">
+            <li><div class="pool-2-selector" id="JDG-selector">
+                <img id="JDG-selector-pic" class="pool-2-selector-pic" src="images/JDG.png">
+                <img id="JDG-top-number" class="pool-2-top-number" src="images/2.svg"></div></li>
+            <li><div class="pool-2-selector" id="SN-selector">
+                <img id="SN-selector-pic" class="pool-2-selector-pic" src="images/SN.png">
+                <img id="SN-top-number" class="pool-2-top-number"></div></li>
+            <li><div class="pool-2-selector" id="FNC-selector">
+                <img id="FNC-selector-pic" class="pool-2-selector-pic" src="images/FNC.png">
+                <img id="FNC-top-number" class="pool-2-top-number"></div></li>
+            <li><div class="pool-2-selector" id="DRX-selector">
+                <img id="DRX-selector-pic" class="pool-2-selector-pic" src="images/DRX.png">
+                <img id="DRX-top-number" class="pool-2-top-number"></div></li>
+        </ul>
+        <button class="pool-header">Pool 3</button>
+        <ul class="pool" id="pool-3">
+            <li> <div class="pool-3-selector" id="RGE-selector">
+                <img id="RGE-selector-pic" class="pool-3-selector-pic" src="images/RGE.png">
+                <img id="RGE-top-number" class="pool-3-top-number"></div></li>
+            <li> <div class="pool-3-selector" id="GEN-selector">
+                <img id="GEN-selector-pic" class="pool-3-selector-pic" src="images/GEN.png">
+                <img id="GEN-top-number" class="pool-3-top-number"></div></li>
+            <li> <div class="pool-3-selector" id="FLY-selector">
+                <img id="FLY-selector-pic" class="pool-3-selector-pic" src="images/FLY.png">
+                <img id="FLY-top-number" class="pool-3-top-number"></div></li>
+            <li> <div class="pool-3-selector" id="MCX-selector">
+                <img id="MCX-selector-pic" class="pool-3-selector-pic" src="images/MCX.png">
+                <img id="MCX-top-number" class="pool-3-top-number"></div></li>
+        </ul>
+        </main>
+        <hr>
+        <footer>
+        <p>
+            This site is not affiliated with Riot games or any of the teams in any way.
+            Images were taken from a
+            <a href="https://www.reddit.com/r/leagueoflegends/comments/ipdjlr/worlds_2020_wallpaper_with_all_22_qualified_teams/">
+            Worlds 2020 wallpaper</a> posted on reddit.
+            Probabilities are rounded to the nearest percent and may not add up to 100%.
+        </p>
+        </footer>
+    </body>
+</html>

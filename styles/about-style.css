@@ -1,0 +1,17 @@
+html {
+    overflow-y: scroll;
+}
+
+main {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+#proof-text {
+    display: none;
+}
+
+.expand-hide, .hide {
+    color: blue;
+    text-decoration: underline;
+}

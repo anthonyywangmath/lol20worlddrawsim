@@ -1,0 +1,110 @@
+html {
+    overflow-y: scroll;
+}
+
+main {
+    max-width: 700px;
+    margin: 0 auto;
+    font-family: sans-serif;
+}
+
+#display-table {
+    width: 100%;
+}
+
+.probability-undertable td {
+    border: 1px solid black;
+}
+
+.simulation-control{
+    margin: 5px;
+}
+
+.pool {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.pool li {
+    padding: 0px 0.6rem;
+    display: block;
+    margin: 3px;
+}
+
+.pool-header {
+    text-align: left;
+    background-color: #2874A6;
+    color: #FFFFFF;
+    width: 100%;
+    border: 2px;
+    font-size: 22px;
+    padding: 6px;
+    margin: 1px 0px;
+}
+
+.pool-1-selector, .pool-2-selector, .pool-3-selector{
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+.pool-1-selector-pic, .pool-2-selector-pic, .pool-3-selector-pic {
+    position: static;
+}
+
+#pool-2, #pool-3 {
+    display: none;
+}
+
+.pool-2-selector-pic, .pool-3-selector-pic {
+    opacity: 0.15;
+}
+
+.pool-1-top-number, .pool-2-top-number, .pool-3-top-number {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+#pool-1-header {
+    background-color: #E67E22;
+}
+
+a:visited {
+    color: blue;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.pool-set {
+    width: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 5px;
+}
+
+.display-table-cell {
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+.probability-undertable {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
+}
+
+.pool-1-top-number, .pool-2-top-number, .pool-3-top-number {
+    pointer-events: none;
+}

@@ -1,0 +1,23 @@
+ul.navbar-list {
+    list-style-type: none;
+    display: flex;
+    padding: 0px;
+}
+
+ul.nabar-list li {
+    padding: 20px 0.6rem;
+}
+
+ul.navbar-list li a {
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+}
+
+ul.navbar-list li a:hover {
+    color: gray;
+}
+
+header, .navbar {
+    font-family: sans-serif;
+}
